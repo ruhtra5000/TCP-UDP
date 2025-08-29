@@ -14,7 +14,7 @@ for seq in range(5):
     timeSend = time.time_ns()
     payload = f"Mensagem TCP {seq+1}"
 
-    # Mesangem com: número de sequencia, horário do envio, 
+    # Mensagem com: número de sequencia, horário do envio, 
     # tamanho do conteúdo, e o conteúdo em si
     completeMessage = f"{seq}|{timeSend}|{len(payload)}|{payload}"
     
