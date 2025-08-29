@@ -53,7 +53,7 @@ def calculateThroughput(totalTime):
     for data in dataRecieved:
         sizeRecieved += data["len"]
 
-    return (sizeRecieved*8) / totalTime
+    return sizeRecieved / totalTime
 
 # "Main"
 # Recebimento de mensagens UDP
@@ -64,7 +64,7 @@ def UDPServer():
             data, addr = server.recvfrom(1024)
             data = data.decode()
 
-            seq, timeSend, len, payload = data.split('|', 3) # Divisão da mensagem
+            seq, timeSend, lenght, payload = data.split('|', 3) # Divisão da mensagem
                 
             rtt = calculateRTT(timeSend)
             jitter = calculateJitter(rtt)
@@ -76,7 +76,7 @@ def UDPServer():
             dataRecieved.append({
                 "seq": int(seq), 
                 "timeSend": int(timeSend), 
-                "len": int(len), 
+                "len": len(data.encode()), 
                 "payload": payload, 
                 "RTT": rtt, 
                 "jitter": jitter
@@ -103,4 +103,4 @@ print(f'\n\ninfo: {info}\n')
 for data in dataRecieved:
     print(f"{data}\n")
 
-print(f"Throughput (bytes/s): {calculateThroughput(end - start - timeoutTime)}\n")
+print(f"Throughput (bytes/s): {calculateThroughput(end - start - timeoutTime):.2f}\n")
